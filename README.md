@@ -6,6 +6,10 @@ SiteCore was created by **Catalin Lazar** based on administrative and compliance
 
 This public portfolio version uses fictional demonstration data and does not provide access to C&W Contracts’ operational records.
 
+## Live Demo
+
+[Open SiteCore Workforce Management](https://lastarus.github.io/sitecore-workforce-management/)
+
 ![SiteCore Workforce Management preview](sitecore-workforce-management-preview.png)
 
 ## Key Features
