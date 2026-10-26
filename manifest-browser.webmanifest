@@ -1,0 +1,11 @@
+{
+  "name": "SiteCore Workforce Management",
+  "short_name": "SiteCore",
+  "description": "A workforce management application for operative records, training compliance, holidays and medical tracking.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#F3F1EC",
+  "theme_color": "#2F3943",
+  "icons": []
+}

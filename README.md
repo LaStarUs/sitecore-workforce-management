@@ -30,7 +30,19 @@ This public portfolio version uses fictional demonstration data and does not pro
 - Activity and audit tracking
 - Local browser storage
 - Responsive desktop and mobile interface
+- Installable as an app (PWA) with offline support
 - Fictional demonstration workforce records
+
+## Screenshots
+
+<p float="left">
+  <img src="docs/screenshots/04-training-matrix.png" width="49%" alt="Training matrix" />
+  <img src="docs/screenshots/05-medical.png" width="49%" alt="Medical tracker" />
+</p>
+<p float="left">
+  <img src="docs/screenshots/03-operatives.png" width="49%" alt="Operative directory" />
+  <img src="docs/screenshots/06-holidays.png" width="49%" alt="Holiday tracking" />
+</p>
 
 ## Demo Login
 
@@ -44,12 +56,19 @@ This public portfolio version uses fictional demonstration data and does not pro
 - Username: `guest`
 - Password: `demo1234`
 
+### Site Manager (view only, scoped to two projects)
+
+- Username: `manager`
+- Password: `demo1234`
+
 These credentials are provided exclusively for the public portfolio demonstration and do not provide access to any real company system.
 
 ## Technologies Used
 
+- React 18 (hooks and a reducer-based state store)
+- Vite (bundled into a single self-contained HTML file)
 - HTML5
-- CSS3
+- CSS3 (custom-property design system)
 - JavaScript
 - LocalStorage
 - JSON
@@ -77,6 +96,8 @@ The public demonstration contains fictional:
 No genuine operative records, authentication credentials or confidential company documents are included.
 
 Clearing the browser’s site data may remove locally stored changes and restore the application to its original demonstration state.
+
+Demonstration dates are calculated relative to the day the app is opened, so the mix of valid, expiring and expired qualifications stays realistic over time.
 
 ## My Contribution
 
@@ -113,3 +134,7 @@ The software should undergo appropriate security, data-protection and operationa
 Developed by **Catalin Lazar**
 
 - GitHub: [LaStarUs](https://github.com/LaStarUs)
+
+## License
+
+[MIT](LICENSE)

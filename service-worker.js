@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sitecore-v1';
+const CACHE_NAME = 'sitecore-v2';
 const APP_FILES = [
   './',
   './index.html'
