@@ -1,0 +1,16 @@
+// Version 1 of this demo installed an offline service worker at this path.
+// This replacement clears its cache and unregisters itself, so returning
+// visitors always get the current build.
+self.addEventListener('install', () => self.skipWaiting());
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(keys.map((key) => caches.delete(key)));
+      await self.registration.unregister();
+      const clients = await self.clients.matchAll({ type: 'window' });
+      clients.forEach((client) => client.navigate(client.url));
+    })(),
+  );
+});

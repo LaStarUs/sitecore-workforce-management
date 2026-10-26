@@ -1,139 +1,84 @@
-# SiteCore Workforce Management
+# SiteReady
 
-A responsive workforce-management application developed to organise operative records, training compliance, qualifications, holidays, medical appointments and workforce reporting.
+**Workforce compliance tracking for construction sites.** SiteReady shows which operatives are cleared to work, which cards and training certificates are about to expire, and who is due a medical, so a site team can chase renewals before someone is turned away at the gate.
 
-SiteCore was created by **Catalin Lazar** based on administrative and compliance workflows encountered during his employment at **C&W Contracts**.
+[**Open the live demo**](https://lastarus.github.io/sitecore-workforce-management/) — pick a demo account on the sign-in screen; no typing needed.
 
-This public portfolio version uses fictional demonstration data and does not provide access to C&W Contracts’ operational records.
+![Training matrix: every operative against every qualification, coloured by status](docs/screenshots/training-matrix.png)
 
-## Live Demo
+## Why I built it
 
-[Open SiteCore Workforce Management](https://lastarus.github.io/sitecore-workforce-management/)
+I work in site administration on large construction projects, where I keep operative records, training certificates and medical checks up to date. That work used to live in spreadsheets that had to be checked by hand every week, and an expired card was usually spotted only when someone arrived on site.
 
-![SiteCore Workforce Management preview](sitecore-workforce-management-preview.png)
+SiteReady is the tool I wanted: one place for the records, and a view that makes problems obvious at a glance. Version 1 was a working prototype; this version 2 is a rebuild in React and TypeScript with a cleaner architecture and automated tests.
 
-## Key Features
+## What it does
 
-- Centralised operative directory
-- Detailed operative profiles
-- Search, filtering and workforce segmentation
-- Agency, trade, role and project allocation
-- Training and qualification tracking
-- Expiry-date monitoring and compliance alerts
-- Medical appointment management
-- Holiday request and absence tracking
-- Site and project assignment
-- Document and record management
-- Workforce statistics and reporting
-- Role-based permissions
-- Administrator and guest access
-- Activity and audit tracking
-- Local browser storage
-- Responsive desktop and mobile interface
-- Installable as an app (PWA) with offline support
-- Fictional demonstration workforce records
+- **Overview** — the share of the workforce that is fully compliant, renewals to chase, and which projects have people who can't start.
+- **Training matrix** — every operative against every qualification, coloured valid, expiring within 30 days, expired or missing. Filter to only the people with an issue.
+- **Operative records** — search and filter by name, trade, agency, project and compliance status; add and edit operatives with inline validation.
+- **Qualifications** — record or renew a certificate; the expiry date is suggested from the course's normal validity.
+- **Medicals and holidays** — overdue medicals sorted to the top; holiday requests that an administrator approves or declines.
+- **Roles** — administrator (full access), site manager (only their two projects), guest (read-only, no contact details).
+- **Audit log** — every change is recorded with who made it and when.
 
-## Screenshots
+| Overview | Operative record (dark mode) | Mobile |
+| --- | --- | --- |
+| ![Overview](docs/screenshots/overview.png) | ![Operative record](docs/screenshots/operative-dark.png) | ![Mobile training matrix](docs/screenshots/mobile.png) |
 
-<p float="left">
-  <img src="docs/screenshots/04-training-matrix.png" width="49%" alt="Training matrix" />
-  <img src="docs/screenshots/05-medical.png" width="49%" alt="Medical tracker" />
-</p>
-<p float="left">
-  <img src="docs/screenshots/03-operatives.png" width="49%" alt="Operative directory" />
-  <img src="docs/screenshots/06-holidays.png" width="49%" alt="Holiday tracking" />
-</p>
+## Tech stack
 
-## Demo Login
+- **React 19** with hooks, context and a reducer for state
+- **TypeScript** in strict mode
+- **Vite** for development and builds
+- **React Router** (hash routing, so deep links work on GitHub Pages)
+- **Vitest** and **React Testing Library** — 25 tests
+- **oxlint** for linting
+- **GitHub Actions** — every push is linted, type-checked, tested and built; `main` deploys to GitHub Pages
 
-### Administrator
+## How it's put together
 
-- Username: `admin`
-- Password: `demo1234`
+```
+src/
+  domain/        Pure business logic: types, date maths, compliance rules, validation
+  data/          Storage boundary (WorkforceRepository) and fictional seed data
+  state/         Reducer and React context; every change writes an audit entry
+  auth/          Demo accounts and role permissions
+  components/    Shared UI: layout, form fields, status badges
+  pages/         One component per screen
+```
 
-### Guest
+A few decisions worth explaining:
 
-- Username: `guest`
-- Password: `demo1234`
+- **Business rules are plain functions, not components.** `compliance.ts` decides what "expiring" or "missing" means, so the rules are tested directly and every screen agrees.
+- **The UI never talks to storage directly.** Components go through a `WorkforceRepository` interface. The demo stores data in the browser; swapping in a real API or database means writing one new class, not touching any screens.
+- **Demo data is generated relative to today**, from a fixed random seed, so the demo always shows a realistic mix of valid, expiring and expired records.
+- **Accessibility is part of the build**: labelled form fields with announced errors, a skip link, visible keyboard focus, status shown in text as well as colour, and light and dark themes.
 
-### Site Manager (view only, scoped to two projects)
+## Run it locally
 
-- Username: `manager`
-- Password: `demo1234`
+```bash
+npm install
+npm run dev        # start the app at http://localhost:5173
+npm test           # run the test suite
+npm run build      # production build into dist/
+```
 
-These credentials are provided exclusively for the public portfolio demonstration and do not provide access to any real company system.
+Requires Node 22 or later.
 
-## Technologies Used
+## What I'd add next
 
-- React 18 (hooks and a reducer-based state store)
-- Vite (bundled into a single self-contained HTML file)
-- HTML5
-- CSS3 (custom-property design system)
-- JavaScript
-- LocalStorage
-- JSON
-- Responsive web design
-- Client-side form validation
-- Dynamic data filtering and rendering
-- Role-based interface controls
+- A real backend (Supabase or a small Node API) with proper authentication, replacing browser storage
+- Email reminders 30 days before a qualification expires
+- CSV import from existing spreadsheets, and PDF export of the training matrix
 
-## Data and Privacy
+## Data and privacy
 
-The application runs locally in the browser. Records and settings are stored on the user’s device using browser storage.
+Every person, agency, project and certificate in this demo is fictional. Changes you make are saved only in your own browser; use **Reset demo data** (administrator) to start again. The demo passwords are public and protect nothing.
 
-The public demonstration contains fictional:
+## Author
 
-- Operative names
-- Email addresses
-- Telephone numbers
-- Home addresses
-- National Insurance numbers
-- Agencies and employers
-- Projects and work locations
-- Training and medical records
-- Qualification and holiday information
-
-No genuine operative records, authentication credentials or confidential company documents are included.
-
-Clearing the browser’s site data may remove locally stored changes and restore the application to its original demonstration state.
-
-Demonstration dates are calculated relative to the day the app is opened, so the mix of valid, expiring and expired qualifications stays realistic over time.
-
-## My Contribution
-
-I designed and developed the application, including:
-
-- Workforce-management structure and navigation
-- Operative profiles and record-management workflows
-- Search, filtering and reporting functionality
-- Training and qualification compliance monitoring
-- Expiry warnings and status indicators
-- Holiday-management workflows
-- Medical appointment tracking
-- Project and site allocation
-- Role-based access and permissions
-- Audit-history functionality
-- Responsive user interface
-- Local data storage and persistence
-- Demonstration-data architecture
-- Input validation and usability improvements
-- Public-data sanitisation
-
-## Portfolio and Company Disclaimer
-
-SiteCore is presented as an independently developed software portfolio project based on professional administrative experience.
-
-The public version is not an official C&W Contracts system and does not imply that C&W Contracts has approved, commissioned, endorsed or adopted this demonstration.
-
-**C&W Contracts retains ownership of its company name and branding.** All operational data shown in this repository is fictional and included solely to demonstrate the developer’s technical abilities.
-
-The software should undergo appropriate security, data-protection and operational review before being used with genuine employee or business information.
-
-## Developer
-
-Developed by **Catalin Lazar**
-
-- GitHub: [LaStarUs](https://github.com/LaStarUs)
+Built by **Catalin Lazar** — [GitHub](https://github.com/LaStarUs) · [LinkedIn](https://www.linkedin.com/in/catalinlazar25/)
 
 ## License
 
